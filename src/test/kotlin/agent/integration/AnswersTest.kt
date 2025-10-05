@@ -1,12 +1,12 @@
 package agent.integration
 
 import ai.koog.prompt.executor.clients.openai.OpenAILLMClient
-import ai.koog.prompt.executor.llms.all.simpleOpenAIExecutor
 import com.bay.agent.PuzzleDuelAgent
 import io.github.cdimascio.dotenv.dotenv
 import io.kotest.matchers.string.shouldContain
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
+import kotlin.time.measureTimedValue
 
 class AnswersTest {
     private val env = dotenv()
@@ -23,12 +23,17 @@ class AnswersTest {
 
         val agent = PuzzleDuelAgent {
             client = OpenAILLMClient(env["OPENAI_KEY"])
+//            client = GoogleLLMClient(env["GOOGLE_KEY"])
         }
 
         answers.forEach { (question, answer) ->
-            val result = agent.process(question)
-            println("$question: \n$result")
-            result shouldContain answer
+            val result = measureTimedValue {
+                agent.process(question)
+            }
+            println("$question:")
+            println(result.value)
+            println("Elapsed time: \n${result.duration} s")
+            result.value shouldContain answer
         }
     }
 }

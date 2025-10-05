@@ -3,7 +3,6 @@ package com.bay.agent.tools
 import ai.koog.agents.core.tools.annotations.LLMDescription
 import ai.koog.agents.core.tools.annotations.Tool
 import ai.koog.agents.core.tools.reflect.ToolSet
-import org.jsoup.Jsoup
 
 @LLMDescription("Tools for retrieving information from Puzzle Duel web site")
 class PuzzleDuelReadToolSet(private val httpClient: HttpClient) : ToolSet {

@@ -3,7 +3,6 @@ package com.bay.agent.tools
 import ai.koog.agents.core.tools.annotations.LLMDescription
 import ai.koog.agents.core.tools.annotations.Tool
 import ai.koog.agents.core.tools.reflect.ToolSet
-import kotlinx.datetime.LocalDate
 
 @LLMDescription("Tools for modifying Puzzle Duel web site data")
 class PuzzleDuelWriteToolSet : ToolSet {

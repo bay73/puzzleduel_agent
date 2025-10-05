@@ -1,27 +1,19 @@
 package com.bay.agent
 
 import ai.koog.agents.core.agent.AIAgent
-import ai.koog.agents.core.tools.Tool
 import ai.koog.agents.core.tools.ToolRegistry
-import ai.koog.agents.core.tools.ToolRegistry.Builder
-import ai.koog.agents.core.tools.ToolRegistry.Companion.invoke
 import ai.koog.agents.core.tools.reflect.asTools
-import ai.koog.agents.features.opentelemetry.feature.OpenTelemetry
 import ai.koog.prompt.executor.clients.LLMClient
 import ai.koog.prompt.executor.clients.google.GoogleLLMClient
 import ai.koog.prompt.executor.clients.google.GoogleModels
 import ai.koog.prompt.executor.clients.openai.OpenAILLMClient
 import ai.koog.prompt.executor.clients.openai.OpenAIModels
 import ai.koog.prompt.executor.llms.SingleLLMPromptExecutor
-import ai.koog.prompt.executor.llms.all.simpleOpenAIExecutor
-import ai.koog.prompt.executor.model.PromptExecutor
 import ai.koog.prompt.llm.LLModel
 import com.bay.agent.tools.HttpClient
 import com.bay.agent.tools.JsoupHttpClient
 import com.bay.agent.tools.PuzzleDuelReadToolSet
 import com.bay.agent.tools.PuzzleDuelWriteToolSet
-import io.opentelemetry.exporter.logging.LoggingSpanExporter
-import kotlin.collections.forEach
 
 class PuzzleDuelAgent(
     client: LLMClient,
@@ -65,7 +57,7 @@ class PuzzleDuelAgent(
     // TODO: find better way to choose model - check if Koog has possibility of autoselect model available through an executor.
     private fun chooseModel(llmClient: LLMClient): LLModel =
         when (llmClient) {
-            is OpenAILLMClient -> OpenAIModels.Chat.GPT4o
+            is OpenAILLMClient -> OpenAIModels.Chat.GPT4_1
             is GoogleLLMClient -> GoogleModels.Gemini2_5Flash
             else -> error("Unsupported LLM client: $llmClient")
         }
